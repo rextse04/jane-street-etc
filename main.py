@@ -99,6 +99,8 @@ def main():
         elif message["type"] == "reject":
             print(message)
         elif message["type"] == "fill":
+            if message["symbol"] == "XLF":
+                print(message)
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 o = {
                     "order_id": random.randint(0,100000),
