@@ -18,14 +18,18 @@ def ema_strategy(XLF_trade_info: List[TradeInfo]) -> List[Trade]:
         List[Trade]: A list of trades to perform. May be empty.
 
     """
-  
+    
         XLF_trade_price_list: List[int] = list(map(lambda x: x[0], XLF_trade_info))
-        result: List[str] = generate_signals(XLF_trade_price_list)
-        if result:
+        result = generate_signals(XLF_trade_price_list)
+        if result=="BUY":
       
-            return [{"type" : Action.ADD, "symbol": Symbol.XLF, "dir" : Direction.BUY, "price": result[1]+1, "size": 10},
-                    {"type" : Action.CONVERT, "symbol": Symbol.XLF, "dir" : Direction.SELL, "size": 10},
-                    {"type" : Action.ADD, "symbol": Symbol.XLF, "dir" : Direction.SELL, "price": result[2]-1, "size": 10}]
+            return [{"type" : Action.ADD, "symbol": Symbol.XLF, "dir" : Direction.BUY, "price":XLF_trade_price_list[-1]  , "size": 100}]
+
+        elif result=="SELL":
+      
+            return [{"type" : Action.ADD, "symbol": Symbol.XLF, "dir" : Direction.SELL, "price":XLF_trade_price_list[-1], "size": 100}]
+
+                    
     return []
    
 def ema(values: List[float], period: int) -> float:
