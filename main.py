@@ -81,6 +81,7 @@ def main():
         elif message["type"] == "fill":
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 exchange._write_message({
+                    "order_id": id,
                     "type": "convert",
                     "symbol": message["symbol"],
                     "dir": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
