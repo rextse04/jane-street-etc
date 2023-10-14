@@ -102,13 +102,14 @@ def main():
                 vale[0] = message
                 vale[1] = True
             elif message["symbol"] in log:
-                log[message["symbol"]] = (message["buy"][0][0] + message["sell"][0][0]) / 2
+                if len(message["buy"]) > 0 and len(message["sell"]) > 0:
+                    log[message["symbol"]] = (message["buy"][0][0] + message["sell"][0][0]) / 2
             elif message["symbol"] == "VALBZ":
                 valbx[0] = message
                 valbx[1] = True
             elif message["symbol"] == "XLF":
                 if len(message["buy"]) > 0 and len(message["sell"]) > 0:
-                    print(message["buy"][0][0], message["sell"][0][0], 3 * 1000 + 2 * log["GS"] + 3 * log["MS"] + 2 * log["WFC"])
+                    print(message["buy"][0][0], message["sell"][0][0], (3 * 1000 + 2 * log["GS"] + 3 * log["MS"] + 2 * log["WFC"]) // 10)
             if vale[1] and valbx[1]:
                 for o in valx.strategy(vale[0], valbx[0]):
                     o["order_id"] = random.randint(0,100000)
