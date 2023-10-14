@@ -39,22 +39,6 @@ def main():
     # have already bought/sold symbols and have non-zero positions.
     hello_message = exchange.read_message()
     print("First message from exchange:", hello_message)
-    exchange._write_message({
-        "order_id": random.randint(0,100000),
-        "type": "add",
-        "dir": "BUY",
-        "symbol": "XLF",
-        "price": 4290,
-        "size": 1
-    })
-    exchange._write_message({
-        "order_id": random.randint(0,100000),
-        "type": "add",
-        "dir": "SELL",
-        "symbol": "XLF",
-        "price": 4310,
-        "size": 1
-    })
     # Set up some variables to track the bid and ask price of a symbol. Right
     # now this doesn't track much information, but it's enough to get a sense
     # of the VALE market.
@@ -125,6 +109,22 @@ def main():
                 valbx[0] = message
                 valbx[1] = True
             elif message["symbol"] == "XLF":
+                exchange._write_message({
+                    "order_id": random.randint(0,100000),
+                    "type": "add",
+                    "dir": "BUY",
+                    "symbol": "XLF",
+                    "price": 4280,
+                    "size": 1
+                })
+                exchange._write_message({
+                    "order_id": random.randint(0,100000),
+                    "type": "add",
+                    "dir": "SELL",
+                    "symbol": "XLF",
+                    "price": 4320,
+                    "size": 1
+                })
                 if len(message["buy"]) > 0 and len(message["sell"]) > 0:
                     print(message["buy"][0][0], message["sell"][0][0], (3 * 1000 + 2 * log["GS"] + 3 * log["MS"] + 2 * log["WFC"]) // 10)
             if vale[1] and valbx[1]:
