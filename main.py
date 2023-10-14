@@ -84,8 +84,8 @@ def main():
                 o = {
                     "order_id": random.randint(0,100000),
                     "type": "convert",
-                    "dir": "BUY",
-                    "symbol": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
+                    "dir": "BUY" if message["symbol"] == "VALBZ" else "SELL",
+                    "symbol": "VALE",
                     "size": message["size"]
                 }
                 exchange._write_message(o)
