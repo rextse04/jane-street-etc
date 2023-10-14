@@ -10,29 +10,26 @@ def bond__trade_strategy(buy: List[Resting_order], sell: List[Resting_order]) ->
         List[Trade]: List of trades to perform. May be empty.
     """
     trade_orders = []
-    total_position=0
     for order in buy:
-        if order[0] > 1000 and total_position-order[1]>=-100 :
+        if order[0] > 1000:
             trade = {
                 "type": Action.ADD,
                 "symbol": Symbol.BOND,
                 "dir": Direction.SELL,
                 "price": order[0],
-                "size": order[1]
+                "size": 1
             }
-            total_position-=order[1]
             trade_orders.append(trade)
 
     for order in sell:
-        if order[0] < 1000 and total_position+order[1]<=100:
+        if order[0] < 1000:
             trade = {
                 "type": Action.ADD,
                 "symbol": Symbol.BOND,
                 "dir": Direction.BUY,
                 "price": order[0],
-                "size": order[1]
+                "size": 1
             }
-            total_position+=order[1]
             trade_orders.append(trade)
 
     return trades_orders
