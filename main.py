@@ -39,7 +39,7 @@ def main():
     # have already bought/sold symbols and have non-zero positions.
     hello_message = exchange.read_message()
     print("First message from exchange:", hello_message)
-    exchange._write_exchange({
+    exchange._write_message({
         "order_id": random.randint(0,100000),
         "type": "add",
         "dir": "BUY",
@@ -47,7 +47,7 @@ def main():
         "price": 4290,
         "size": 1
     })
-    exchange._write_exchange({
+    exchange._write_message({
         "order_id": random.randint(0,100000),
         "type": "add",
         "dir": "SELL",
