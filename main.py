@@ -87,7 +87,6 @@ def main():
                     o["order_id"] = id
                     id += 1
                     exchange._write_message(o)
-                    print("Made BOND order:", o)
             if message["symbol"] == "VALE":
                 vale[0] = message
                 vale[1] = True
@@ -100,7 +99,6 @@ def main():
                     o["order_id"] = id
                     id += 1
                     exchange._write_message(o)
-                    print("Made VALX order:", o)
                 vale[1] = False
                 valbx[1] = False
 
