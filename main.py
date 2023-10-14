@@ -83,8 +83,8 @@ def main():
                 exchange._write_message({
                     "order_id": id,
                     "type": "convert",
-                    "symbol": message["symbol"],
-                    "dir": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
+                    "dir": "BUY",
+                    "symbol": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
                     "size": message["size"]
                 })
                 id += 1
