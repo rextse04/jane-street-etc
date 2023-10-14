@@ -81,7 +81,7 @@ def main():
             print(message)
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 exchange._write_message({
-                    "order_id": time.time(),
+                    "order_id": int(time.time()) % 100000,
                     "type": "convert",
                     "dir": "BUY",
                     "symbol": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
@@ -92,7 +92,7 @@ def main():
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
-                    o["order_id"] = time.time()
+                    o["order_id"] = int(time.time()) % 100000
                     exchange._write_message(o)
                     print("Made BOND order:", o)
             elif message["symbol"] == "VALE":
@@ -103,7 +103,7 @@ def main():
                 valbx[1] = True
             if vale[1] and valbx[1]:
                 for o in valx.strategy(vale[0], valbx[0]):
-                    o["order_id"] = time.time()
+                    o["order_id"] = int(time.time()) % 100000
                     exchange._write_message(o)
                     print("Made ARBITRAGE order:", o)
                 vale[1] = False
