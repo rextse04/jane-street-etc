@@ -10,6 +10,7 @@ from enum import Enum
 import time
 import socket
 import json
+import bond
 import valx
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
@@ -86,6 +87,11 @@ def main():
         elif message["type"] == "fill":
             print(message)
         elif message["type"] == "book":
+            if message["symbol"] == "BOND":
+                for o in bond.strategy(message):
+                    o["id"] = id
+                    exchange._write_message(o)
+                    print("Made BOND order:", o)
             if message["symbol"] == "VALE":
                 vale[0] = message
                 vale[1] = True
@@ -96,7 +102,7 @@ def main():
                 for o in valx.strategy(vale[0], valbx[0]):
                     o["id"] = id
                     exchange._write_message(o)
-                    print("Made order:", o)
+                    print("Made VALX order:", o)
                 vale[1] = False
                 valbx[1] = False
 
