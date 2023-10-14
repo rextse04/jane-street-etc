@@ -79,7 +79,7 @@ def main():
         elif message["type"] == "reject":
             print(message)
         elif message["type"] == "fill":
-            if message["symbol"][0] == "V" and message["dir"] = Dir.BUY:
+            if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 exchange._write_message({
                     "type": "convert",
                     "symbol": message["symbol"],
