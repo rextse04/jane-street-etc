@@ -58,7 +58,7 @@ def main():
     # message. Sending a message in response to every exchange message will
     # cause a feedback loop where your bot's messages will quickly be
     # rate-limited and ignored. Please, don't do that!
-    id = [0]
+    id = 0
     while True:
         order = []
         vale = [None, False] #obj, updated
@@ -84,7 +84,9 @@ def main():
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
-                    exchange._write_message(id, o)
+                    o["order_id"] = id
+                    id += 1
+                    exchange._write_message(o)
                     print("Made BOND order:", o)
             if message["symbol"] == "VALE":
                 vale[0] = message
@@ -94,7 +96,9 @@ def main():
                 valbx[1] = True
             if vale[1] and valbx[1]:
                 for o in valx.strategy(vale[0], valbx[0]):
-                    exchange._write_message(id, o)
+                    o["order_id"] = id
+                    id += 1
+                    exchange._write_message(o)
                     print("Made VALX order:", o)
                 vale[1] = False
                 valbx[1] = False
@@ -171,9 +175,7 @@ class ExchangeConnection:
         s.connect((self.exchange_hostname, self.port))
         return s
 
-    def _write_message(self, id, message):
-        message["order_id"] = id[0]
-        id[0] += 1
+    def _write_message(self, message):
         what_to_write = json.dumps(message)
         if not what_to_write.endswith("\n"):
             what_to_write = what_to_write + "\n"
