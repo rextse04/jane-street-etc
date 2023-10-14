@@ -64,6 +64,22 @@ def main():
         "MS": 0,
         "WFC": 0
     }
+    exchange._write_message({
+        "order_id": random.randint(0,100000),
+        "type": "add",
+        "dir": "BUY",
+        "symbol": "XLF",
+        "price": 4280,
+        "size": 100
+    })
+    exchange._write_message({
+        "order_id": random.randint(0,100000),
+        "type": "add",
+        "dir": "SELL",
+        "symbol": "XLF",
+        "price": 4320,
+        "size": 100
+    })
     while True:
         order = []
     
@@ -109,22 +125,6 @@ def main():
                 valbx[0] = message
                 valbx[1] = True
             elif message["symbol"] == "XLF":
-                exchange._write_message({
-                    "order_id": random.randint(0,100000),
-                    "type": "add",
-                    "dir": "BUY",
-                    "symbol": "XLF",
-                    "price": 4280,
-                    "size": 1
-                })
-                exchange._write_message({
-                    "order_id": random.randint(0,100000),
-                    "type": "add",
-                    "dir": "SELL",
-                    "symbol": "XLF",
-                    "price": 4320,
-                    "size": 1
-                })
                 if len(message["buy"]) > 0 and len(message["sell"]) > 0:
                     print(message["buy"][0][0], message["sell"][0][0], (3 * 1000 + 2 * log["GS"] + 3 * log["MS"] + 2 * log["WFC"]) // 10)
             if vale[1] and valbx[1]:
