@@ -30,7 +30,7 @@ def bond__trade_strategy(buy: List[Resting_order], sell: List[Resting_order]) ->
                 "symbol": Symbol.BOND,
                 "dir": Direction.BUY,
                 "price": order[0],
-                "size": 1
+                "size": order[1]
             }
             total_position+=order[1]
             trade_orders.append(trade)
