@@ -4,12 +4,6 @@ def arbitrage(buy_sym, buy_order, sell_sym, sell_order, order):
     while True:
         if buy_order[0][0] - sell_order[0][0] > 10:
             size = min(buy_order[0][1], sell_order[0][1], 10)
-            sell_order[0][1] -= size
-            if(sell_order[0][1] == 0):
-                sell_order.pop(0)
-            buy_order[0][1] -= size
-            if(buy_order[0][1] == 0):
-                buy_order.pop(0)
             order.append({
                 "type": "add",
                 "symbol": sell_sym,
@@ -24,6 +18,12 @@ def arbitrage(buy_sym, buy_order, sell_sym, sell_order, order):
                 "price": buy_order[0][0],
                 "size": size
             })
+            sell_order[0][1] -= size
+            if(sell_order[0][1] == 0):
+                sell_order.pop(0)
+            buy_order[0][1] -= size
+            if(buy_order[0][1] == 0):
+                buy_order.pop(0)
         else:
             break
 def strategy(message_vale, message_valbz):
