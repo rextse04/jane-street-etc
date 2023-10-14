@@ -38,29 +38,22 @@ def generate_signals(values: List[float]) -> str:
 
     Args:
         values (List[float]): A list of float values.
-        period (int): The period or number of periods to consider for EMA calculation.
 
     Returns:
-        List[str]: A list of signals indicating buy ('BUY'), sell ('SELL'), or no action ('HOLD').
-
+        str: A signal indicating buy ('BUY'), sell ('SELL'), or no action ('HOLD').
 
     """
     ema5 = ema(values, 5)
     ema13 = ema(values, 13)
 
-    
-    for i in range(len(values)):
-        if i >= 1:
-            prev_ema5 = ema(values[:i], 5)
-            prev_ema13 = ema(values[:i], 13)
-            if prev_ema5 < prev_ema13 and ema5 > ema13:
-                signals.append('BUY')
-            elif prev_ema5 > prev_ema13 and ema5 < ema13:
-                signals.append('SELL')
-            else:
-                signals.append('HOLD')
-        else:
-            signals.append('HOLD')
+    if len(values) > 1:
+        prev_ema5 = ema(values[:-1], 5)
+        prev_ema13 = ema(values[:-1], 13)
 
-    return signals
+        if prev_ema5 < prev_ema13 and ema5 > ema13:
+            return 'BUY'
+        elif prev_ema5 > prev_ema13 and ema5 < ema13:
+            return 'SELL'
+
+    return 'HOLD'
 
