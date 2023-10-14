@@ -87,6 +87,7 @@ def main():
                     o["order_id"] = id
                     id += 1
                     exchange._write_message(o)
+                    print("Made BOND order:", o)
             elif message["symbol"] == "VALE":
                 vale[0] = message
                 vale[1] = True
@@ -94,11 +95,11 @@ def main():
                 valbx[0] = message
                 valbx[1] = True
             if vale[1] and valbx[1]:
-                print("hm")
                 for o in valx.strategy(vale[0], valbx[0]):
                     o["order_id"] = id
                     id += 1
                     exchange._write_message(o)
+                    print("Made ARBITRAGE order:", o)
                 vale[1] = False
                 valbx[1] = False
 
