@@ -3,9 +3,11 @@ def arbitrage(buy_order, sell_order, order):
         if buy_order[0][0] - sell_order[0][0] > 10:
             size = min(buy_order[0][1], sell_order[0][1], 10)
             sell_order[0][1] -= size
-            if(sell_order[0][1] == 0) sell_order.pop(0)
+            if(sell_order[0][1] == 0):
+                sell_order.pop(0)
             buy_order[0][1] -= size
-            if(buy_order[0][1] == 0) buy_order.pop(0)
+            if(buy_order[0][1] == 0):
+                buy_order.pop(0)
             order.append({
                 "type": "add",
                 "symbol": sell_order["symbol"],
@@ -20,6 +22,7 @@ def arbitrage(buy_order, sell_order, order):
                 "size": size
             })
             order.append({
+                "type": "add",
                 "symbol": buy_order["symbol"],
                 "dir": "SELL",
                 "price": buy_order[i][0],
