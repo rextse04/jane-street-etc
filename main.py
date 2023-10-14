@@ -82,16 +82,15 @@ def main():
         elif message["type"] == "fill":
             print(message)
         elif message["type"] == "book":
-            print("book")
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
                     o["order_id"] = id
                     id += 1
                     exchange._write_message(o)
-            if message["symbol"] == "VALE":
+            elif message["symbol"] == "VALE":
                 vale[0] = message
                 vale[1] = True
-            if message["symbol"] == "VALBX":
+            elif message["symbol"] == "VALBZ":
                 valbx[0] = message
                 valbx[1] = True
             if vale[1] and valbx[1]:
