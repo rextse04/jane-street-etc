@@ -1,7 +1,7 @@
 def arbitrage(buy_sym, buy_order, sell_sym, sell_order, order):
-    if len(buy_order) == 0 or len(sell_order) == 0:
-        return False
     while True:
+        if len(buy_order) == 0 or len(sell_order) == 0:
+            return False
         if buy_order[0][0] - sell_order[0][0] > 10:
             size = min(buy_order[0][1], sell_order[0][1], 10)
             order.append({
