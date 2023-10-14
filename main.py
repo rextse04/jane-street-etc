@@ -81,13 +81,15 @@ def main():
         elif message["type"] == "fill":
             print(message)
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
-                exchange._write_message({
+                o = {
                     "order_id": random.randint(0,100000),
                     "type": "convert",
                     "dir": "BUY",
                     "symbol": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
                     "size": message["size"]
-                })
+                }
+                exchange._write_message(o)
+                print("Made CONVERT order:", o)
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
