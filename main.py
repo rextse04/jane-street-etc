@@ -59,10 +59,10 @@ def main():
     # cause a feedback loop where your bot's messages will quickly be
     # rate-limited and ignored. Please, don't do that!
     id = 0
+    vale = [None, False] #obj, updated
+    valbx = [None, False]
     while True:
         order = []
-        vale = [None, False] #obj, updated
-        valbx = [None, False]
         
         message = exchange.read_message()
 
