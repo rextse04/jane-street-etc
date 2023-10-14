@@ -107,7 +107,7 @@ def main():
                         "type": "add",
                         "dir": "BUY",
                         "symbol": "XLF",
-                        "price": 4280,
+                        "price": 4250,
                         "size": message["size"]
                     })
                 elif message["dir"] == Dir.SELL:
@@ -116,7 +116,7 @@ def main():
                         "type": "add",
                         "dir": "SELL",
                         "symbol": "XLF",
-                        "price": 4320,
+                        "price": 4350,
                         "size": message["size"]
                     })
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
