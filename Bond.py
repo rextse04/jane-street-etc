@@ -32,4 +32,4 @@ def bond__trade_strategy(buy: List[Resting_order], sell: List[Resting_order]) ->
             }
             trade_orders.append(trade)
 
-    return trades_orders
+    return trade_orders
