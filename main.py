@@ -39,7 +39,22 @@ def main():
     # have already bought/sold symbols and have non-zero positions.
     hello_message = exchange.read_message()
     print("First message from exchange:", hello_message)
-
+    exchange.write_exchange({
+        "order_id": random.randint(0,100000),
+        "type": "add",
+        "dir": "BUY",
+        "symbol": "XLF",
+        "price": 4290
+        "size": 1
+    })
+    exchange.write_exchange({
+        "order_id": random.randint(0,100000),
+        "type": "add",
+        "dir": "SELL",
+        "symbol": "XLF",
+        "price": 4310
+        "size": 1
+    })
     # Set up some variables to track the bid and ask price of a symbol. Right
     # now this doesn't track much information, but it's enough to get a sense
     # of the VALE market.
