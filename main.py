@@ -44,7 +44,7 @@ def main():
         "type": "add",
         "dir": "BUY",
         "symbol": "XLF",
-        "price": 4290
+        "price": 4290,
         "size": 1
     })
     exchange.write_exchange({
@@ -52,7 +52,7 @@ def main():
         "type": "add",
         "dir": "SELL",
         "symbol": "XLF",
-        "price": 4310
+        "price": 4310,
         "size": 1
     })
     # Set up some variables to track the bid and ask price of a symbol. Right
