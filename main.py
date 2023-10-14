@@ -98,6 +98,7 @@ def main():
                     exchange._write_message(o)
                 vale[1] = False
                 valbx[1] = False
+        print(message)
 
 # ~~~~~============== PROVIDED CODE ==============~~~~~
 
