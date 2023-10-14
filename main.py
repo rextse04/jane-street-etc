@@ -95,6 +95,7 @@ def main():
                 valbx[0] = message
                 valbx[1] = True
             if vale[1] and valbx[1]:
+                print("hm")
                 for o in valx.strategy(vale[0], valbx[0]):
                     o["order_id"] = id
                     id += 1
