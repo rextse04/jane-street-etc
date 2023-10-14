@@ -1,36 +1,48 @@
+import numpy as np
 import pandas as pd
-import ta
 
-def ripster_test_strategy(df):
-    df['ema5'] = ta.trend.ema_indicator(df['close'], window=5)
-    df['ema13'] = ta.trend.ema_indicator(df['close'], window=13)
+from typing import List, Union
+from helper import *
+from etc_types import *
 
-    df['long'] = df['ema5'] > df['ema13']
-    df['short'] = df['openprofit'] > 300
+def ema_strategy(vale_trade_info: List[TradeInfo], valbz_trade_info: List[TradeInfo]) -> List[Trade]:
+    """Takes in the trade data for VALE and VALBZ and returns either `None` or a list of trades to perform.
 
-    df['signal_long'] = df['long'].shift(1) & ~df['long']
-    df['signal_short'] = df['short'].shift(1) & ~df['short']
+    This algorithm makes use of exponential moving averages.
 
-    df['position'] = 0
-    df.loc[df['signal_long'], 'position'] = 1000
-    df.loc[df['signal_short'], 'position'] = -1000
+    Args:
 
-    df['position'] = df['position'].ffill().fillna(0)
-    df['position'] = df['position'].astype(int)
+        vale_trade_info (List[TradeInfo]): List of VALE `(price, quantity)` tuples in chronological order.
+        valbz_trade_info (List[TradeInfo]): List of VALBZ `(price, quantity)` tuples in chronological order.
 
-    df['close_position'] = False
-    df.loc[df['signal_long'] & df['short'], 'close_position'] = True
-    df.loc[df['signal_short'] & df['long'], 'close_position'] = True
+    Returns:
+    
+        List[Trade]: A list of trades to perform. May be empty.
 
-    df['close_position'] = df['close_position'].shift(1).fillna(False)
-    df['close_position'] = df['close_position'] | df['long'] | df['short']
+    """
+    vale_trade_price_list: List[int] = list(map(lambda x: x[0], vale_trade_info))
+    valbz_trade_price_list: List[int] = list(map(lambda x: x[0], valbz_trade_info))
+    if len(vale_trade_price_list) >= 10 and len(valbz_trade_price_list) >= 10:
+        vale: List[int] = vale_trade_price_list[-10:]
+        valbz: List[int] = valbz_trade_price_list[-10:]
+        result: List[Union[bool, float]] = adr_signal(valbz, vale)
+        if result:
+            # print ("\n------------------------- ADR Trading -------------------------\n")
+            return [{"type" : Action.ADD, "symbol": Symbol.VALE, "dir" : Direction.BUY, "price": result[1]+1, "size": 10},
+                    {"type" : Action.CONVERT, "symbol": Symbol.VALE, "dir" : Direction.SELL, "size": 10},
+                    {"type" : Action.ADD, "symbol": Symbol.VALBZ, "dir" : Direction.SELL, "price": result[2]-1, "size": 10}]
+    return []
 
-    return df
+def ema(values: List[float], period: int) -> float:
+    """Calculates exponential moving average for a given list of floats and period."""
+    values: np.ndarray = np.array(values)
+    return pd.DataFrame(values).ewm(span=period, adjust=False).mean().values[-1][-1]
 
-# Example usage
-data = pd.read_csv('your_data.csv')  # Replace 'your_data.csv' with your actual data file
-data['timestamp'] = pd.to_datetime(data['timestamp'])  # Convert timestamp column to datetime if needed
-data.set_index('timestamp', inplace=True)
-
-processed_data = ripster_test_strategy(data)
-print(processed_data)
+# Common stock & its ADR pair trading strategy
+def adr_signal(cs_trade_price_list: List[int], adr_trade_price_list: List[int]) -> List[Union[bool, float]]:
+    cs_mean: float = ema(cs_trade_price_list, 10)
+    adr_mean: float = ema(adr_trade_price_list, 10)
+    fair_diff: float = cs_mean - adr_mean
+    if (fair_diff >= 2):
+        return [True, adr_mean, cs_mean]
+    return []
