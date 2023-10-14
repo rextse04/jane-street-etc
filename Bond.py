@@ -17,7 +17,7 @@ def bond__trade_strategy(buy: List[Resting_order], sell: List[Resting_order]) ->
         {"type": "add", "symbol": "BOND", "dir": "BUY", "price": 998, "size": 5}]
     """
     trade_orders = []
-    hello_message={"type": "hello", "team": "MARV"}
+
 
     for order in buy:
         if order[0] > 1000 and order[1]<=100 :
@@ -41,4 +41,4 @@ def bond__trade_strategy(buy: List[Resting_order], sell: List[Resting_order]) ->
             }
             trade_orders.append(trade)
 
-    return hello_message+trades_orders
+    return trades_orders
