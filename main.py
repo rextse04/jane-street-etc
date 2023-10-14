@@ -86,10 +86,10 @@ def main():
         elif message["type"] == "fill":
             print(message)
         elif message["type"] == "book":
-            if message["symbol"] = "VALE":
+            if message["symbol"] == "VALE":
                 vale[0] = message
                 vale[1] = True
-            if message["symbol"] = "VALBX":
+            if message["symbol"] == "VALBX":
                 valbx[0] = message
                 valbx[1] = True
             if vale[1] and valbx[1]:
