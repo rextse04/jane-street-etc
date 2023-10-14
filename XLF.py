@@ -59,6 +59,10 @@ def generate_signals(values: List[float]) -> str:
             return 'BUY'
         elif prev_ema5 > prev_ema13 and ema5 < ema13:
             return 'SELL'
+        elif Net_position>0 and values[-1]<=ema5*0.96:
+            return 'SELL'
+        elif Net_position<0 and values[-1]>=ema5*1.04:
+            return 'BUY'
 
     return 'HOLD'
 
