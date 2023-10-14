@@ -87,8 +87,6 @@ def main():
                     "symbol": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
                     "size": message["size"]
                 })
-                exchange._write_message(o)
-                print("Made CONVERT order:", o)
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
