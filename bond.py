@@ -1,5 +1,7 @@
 def strategy(message):
     order = []
+    if len(message) == 0:
+        return order
     if message["buy"][0][0] > 1000:
         trade = {
             "type": "add",
