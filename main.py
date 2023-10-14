@@ -27,7 +27,6 @@ team_name = "MARV"
 # price, and it prints the current prices for VALE every second. The sample
 # code is intended to be a working example, but it needs some improvement
 # before it will start making good trades!
-
 def main():
     args = parse_arguments()
 
@@ -80,7 +79,16 @@ def main():
         elif message["type"] == "reject":
             print(message)
         elif message["type"] == "fill":
-            print(message)
+            if message["symbol"][0] == "V" and message["dir"] = Dir.BUY:
+                exchange._write_message({
+                    "type": "convert",
+                    "symbol": message["symbol"],
+                    "dir": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
+                    "size": message["size"]
+                })
+                id += 1
+                exchange._write_message(o)
+                print("Made CONVERT order:", o)
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
