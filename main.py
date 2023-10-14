@@ -79,6 +79,7 @@ def main():
         elif message["type"] == "reject":
             print(message)
         elif message["type"] == "fill":
+            print(message)
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 exchange._write_message({
                     "order_id": id,
