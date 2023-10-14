@@ -89,24 +89,24 @@ def main():
                     "size": message["size"]
                 }
                 exchange._write_message(o)
-                print("Made CONVERT order:", o)
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
                     o["order_id"] = random.randint(0,100000)
                     exchange._write_message(o)
-                    print("Made BOND order:", o)
             elif message["symbol"] == "VALE":
                 vale[0] = message
                 vale[1] = True
             elif message["symbol"] == "VALBZ":
                 valbx[0] = message
                 valbx[1] = True
+            elif message["symbol"] == "XLF":
+                if len(message["buy"]) > 0 and len(message["sell"]) > 0:
+                    print(message["buy"][0][0], message["sell"][0][0])
             if vale[1] and valbx[1]:
                 for o in valx.strategy(vale[0], valbx[0]):
                     o["order_id"] = random.randint(0,100000)
                     exchange._write_message(o)
-                    print("Made ARBITRAGE order:", o)
                 vale[1] = False
                 valbx[1] = False
 
