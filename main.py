@@ -101,6 +101,24 @@ def main():
         elif message["type"] == "fill":
             if message["symbol"] == "XLF":
                 print(message)
+                if message["dir"] == Dir.BUY:
+                    exchange._write_message({
+                        "order_id": random.randint(0,100000),
+                        "type": "add",
+                        "dir": "BUY",
+                        "symbol": "XLF",
+                        "price": 4280,
+                        "size": message["size"]
+                    })
+                elif message["dir"] == Dir.SELL:
+                    exchange._write_message({
+                        "order_id": random.randint(0,100000),
+                        "type": "add",
+                        "dir": "SELL",
+                        "symbol": "XLF",
+                        "price": 4320,
+                        "size": message["size"]
+                    })
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 o = {
                     "order_id": random.randint(0,100000),
