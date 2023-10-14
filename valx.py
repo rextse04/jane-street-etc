@@ -1,4 +1,4 @@
-def arbitrage(buy_order, sell_order, order):
+def arbitrage(buy_sym, buy_order, sell_sym, sell_order, order):
     if len(buy_order) == 0 or len(sell_order) == 0:
         return False
     while True:
@@ -12,20 +12,20 @@ def arbitrage(buy_order, sell_order, order):
                 buy_order.pop(0)
             order.append({
                 "type": "add",
-                "symbol": sell_order["symbol"],
+                "symbol": sell_sym,
                 "dir": "BUY",
                 "price": sell_order[i][0],
                 "size": size
             })
             order.append({
                 "type": "convert",
-                "symbol": buy_order["symbol"],
+                "symbol": buy_sym,
                 "dir": "BUY",
                 "size": size
             })
             order.append({
                 "type": "add",
-                "symbol": buy_order["symbol"],
+                "symbol": buy_sym,
                 "dir": "SELL",
                 "price": buy_order[i][0],
                 "size": size
@@ -34,6 +34,6 @@ def arbitrage(buy_order, sell_order, order):
             break
 def strategy(message_vale, message_valbz):
     order = []
-    arbitrage(message_vale["buy"], message_valbz["sell"], order)
-    arbitrage(message_valbz["buy"], message_vale["sell"], order)
+    arbitrage("VALE", message_vale["buy"], "VALBZ", message_valbz["sell"], order)
+    arbitrage("VALBZ", message_valbz["buy"], "VALE", message_vale["sell"], order)
     return order
