@@ -10,6 +10,7 @@ from enum import Enum
 import time
 import socket
 import json
+import valx
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # Replace "REPLACEME" with your team name!
@@ -26,7 +27,7 @@ team_name = "MARV"
 # code is intended to be a working example, but it needs some improvement
 # before it will start making good trades!
 
-
+id = 0
 def main():
     args = parse_arguments()
 
@@ -63,6 +64,10 @@ def main():
     # cause a feedback loop where your bot's messages will quickly be
     # rate-limited and ignored. Please, don't do that!
     while True:
+        order = []
+        vale = [None, False] #obj, updated
+        valbx = [None, False]
+        
         message = exchange.read_message()
 
         # Some of the message types below happen infrequently and contain
@@ -81,26 +86,18 @@ def main():
         elif message["type"] == "fill":
             print(message)
         elif message["type"] == "book":
-            if message["symbol"] == "VALE":
-
-                def best_price(side):
-                    if message[side]:
-                        return message[side][0][0]
-
-                vale_bid_price = best_price("buy")
-                vale_ask_price = best_price("sell")
-
-                now = time.time()
-
-                if now > vale_last_print_time + 1:
-                    vale_last_print_time = now
-                    print(
-                        {
-                            "vale_bid_price": vale_bid_price,
-                            "vale_ask_price": vale_ask_price,
-                        }
-                    )
-
+            if message["symbol"] = "VALE":
+                vale[0] = message
+                vale[1] = True
+            if message["symbol"] = "VALBX":
+                valbx[0] = message
+                valbx[1] = True
+            if vale[1] and valbx[1]:
+                for o in valx.strategy(vale[0], valbx[0]):
+                    o["id"] = id
+                    exchange._write_message(o)
+                vale[1] = False
+                valbx[1] = False
 
 # ~~~~~============== PROVIDED CODE ==============~~~~~
 
