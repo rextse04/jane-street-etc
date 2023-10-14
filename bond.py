@@ -5,7 +5,7 @@ def strategy(message):
             "type": "add",
             "symbol": "BOND",
             "dir": "SELL",
-            "price": message["BUY"][0][0],
+            "price": message["buy"][0][0],
             "size": 1
         }
         for i in range(message["buy"][0][1]):
@@ -15,7 +15,7 @@ def strategy(message):
             "type": "add",
             "symbol": "BOND",
             "dir": "BUY",
-            "price": message["SELL"][0][0],
+            "price": message["sell"][0][0],
             "size": 1
         }
         for i in range(message["sell"][0][1]):
