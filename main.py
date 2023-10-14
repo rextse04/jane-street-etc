@@ -41,11 +41,6 @@ def main():
     hello_message = exchange.read_message()
     print("First message from exchange:", hello_message)
 
-    # Send an order for BOND at a good price, but it is low enough that it is
-    # unlikely it will be traded against. Maybe there is a better price to
-    # pick? Also, you will need to send more orders over time.
-    exchange.send_add_message(order_id=1, symbol="BOND", dir=Dir.BUY, price=990, size=1)
-
     # Set up some variables to track the bid and ask price of a symbol. Right
     # now this doesn't track much information, but it's enough to get a sense
     # of the VALE market.
@@ -89,7 +84,7 @@ def main():
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
-                    o["id"] = id
+                    o["order_id"] = id
                     exchange._write_message(o)
                     print("Made BOND order:", o)
             if message["symbol"] == "VALE":
@@ -100,7 +95,7 @@ def main():
                 valbx[1] = True
             if vale[1] and valbx[1]:
                 for o in valx.strategy(vale[0], valbx[0]):
-                    o["id"] = id
+                    o["order_id"] = id
                     exchange._write_message(o)
                     print("Made VALX order:", o)
                 vale[1] = False
