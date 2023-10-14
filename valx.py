@@ -18,12 +18,6 @@ def arbitrage(buy_sym, buy_order, sell_sym, sell_order, order):
                 "size": size
             })
             order.append({
-                "type": "convert",
-                "symbol": buy_sym,
-                "dir": "BUY",
-                "size": size
-            })
-            order.append({
                 "type": "add",
                 "symbol": buy_sym,
                 "dir": "SELL",
