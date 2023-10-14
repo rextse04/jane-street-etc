@@ -96,9 +96,9 @@ def main():
                 for o in valx.strategy(vale[0], valbx[0]):
                     o["id"] = id
                     exchange._write_message(o)
+                    print("Made order:", o)
                 vale[1] = False
                 valbx[1] = False
-        print(message)
 
 # ~~~~~============== PROVIDED CODE ==============~~~~~
 
