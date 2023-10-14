@@ -82,6 +82,7 @@ def main():
         elif message["type"] == "fill":
             print(message)
         elif message["type"] == "book":
+            print("book")
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
                     o["order_id"] = id
