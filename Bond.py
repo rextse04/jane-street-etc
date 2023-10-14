@@ -1,12 +1,12 @@
 from typing import List
 from etc_types import *
 
-def bond__trade_strategy(buy: List[RestingOrder], sell: List[RestingOrder]) -> List[Trade]:
+def bond__trade_strategy(buy: List[Resting_order], sell: List[Resting_order]) -> List[Trade]:
     """Generates trades based on resting buy and sell orders for BOND
 
     Args:
-        buy (List[RestingOrder]): Resting buy orders of BOND.
-        sell (List[RestingOrder]): Resting sell orders of BOND.
+        buy (List[Resting_order]): Resting buy orders of BOND.
+        sell (List[Resting_order]): Resting sell orders of BOND.
 
     Returns:
         List[Trade]: List of trades to perform. May be empty.
