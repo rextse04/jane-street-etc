@@ -57,7 +57,6 @@ def main():
     # message. Sending a message in response to every exchange message will
     # cause a feedback loop where your bot's messages will quickly be
     # rate-limited and ignored. Please, don't do that!
-    id = 0
     vale = [None, False] #obj, updated
     valbx = [None, False]
     while True:
@@ -82,20 +81,18 @@ def main():
             print(message)
             if message["symbol"][0] == "V" and message["dir"] == Dir.BUY:
                 exchange._write_message({
-                    "order_id": id,
+                    "order_id": time.time(),
                     "type": "convert",
                     "dir": "BUY",
                     "symbol": "VALE" if message["symbol"] == "VALBZ" else "VALBZ",
                     "size": message["size"]
                 })
-                id += 1
                 exchange._write_message(o)
                 print("Made CONVERT order:", o)
         elif message["type"] == "book":
             if message["symbol"] == "BOND":
                 for o in bond.strategy(message):
-                    o["order_id"] = id
-                    id += 1
+                    o["order_id"] = time.time()
                     exchange._write_message(o)
                     print("Made BOND order:", o)
             elif message["symbol"] == "VALE":
@@ -106,8 +103,7 @@ def main():
                 valbx[1] = True
             if vale[1] and valbx[1]:
                 for o in valx.strategy(vale[0], valbx[0]):
-                    o["order_id"] = id
-                    id += 1
+                    o["order_id"] = time.time()
                     exchange._write_message(o)
                     print("Made ARBITRAGE order:", o)
                 vale[1] = False
